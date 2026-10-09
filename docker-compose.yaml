@@ -1,0 +1,31 @@
+services:
+  torbox-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: torbox-monitor:local
+    container_name: torbox-monitor
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DB_PATH: /data/downloads.db
+    volumes:
+      - torbox-data:/data
+    mem_limit: 256m
+    mem_reservation: 64m
+    memswap_limit: 256m
+    cpus: 0.50
+    pids_limit: 64
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+volumes:
+  torbox-data:
