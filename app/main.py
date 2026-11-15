@@ -16,6 +16,5 @@ while True:
         enviar_notificacao(evento)
         print(enviar_notificacao(evento))
 
-    
     time.sleep(30)
     

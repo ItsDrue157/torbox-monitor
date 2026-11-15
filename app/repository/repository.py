@@ -2,7 +2,6 @@ import os
 import sqlite3
 from pathlib import Path
 
-
 DB_PATH = Path(os.getenv("DB_PATH", "app/database/downloads.db"))
 
 def connect_db():
@@ -14,14 +13,11 @@ def criar_tabela_downloads():
         cursor = conn.cursor()
         cursor.execute("CREATE TABLE IF NOT EXISTS downloads (torbox_id INTEGER PRIMARY KEY,name TEXT NOT NULL,download_state TEXT,progress REAL,eta INTEGER,download_speed INTEGER);")
 
-
 def salvar_downloads(download):
     with connect_db() as conn:
         cursor = conn.cursor()
         cursor.execute("INSERT OR IGNORE INTO downloads (torbox_id, name, download_state, progress, eta) VALUES (?, ?, ?, ?, ?)",(download["id"],download["name"],download["download_state"], download["progress"],download["eta"]))
     return True
-
-
 
 def buscar_download(torbox_id):
     with connect_db() as conn:
